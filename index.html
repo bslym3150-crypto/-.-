@@ -1,0 +1,132 @@
+<!-- ===== إضافات احترافية (لا تعدل الكود الأساسي) ===== -->
+
+<style>
+/* دخان */
+.smoke {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: url('https://i.ibb.co/7QpKsCX/smoke.png');
+    opacity: 0.12;
+    animation: smokeMove 80s linear infinite;
+    z-index: -2;
+}
+@keyframes smokeMove {
+    from { transform: translate(0,0); }
+    to { transform: translate(-600px,-600px); }
+}
+
+/* زر البيت */
+.home-btn {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: var(--p);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 20px var(--p);
+}
+
+/* الساعة */
+.clock-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+/* toast */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--p);
+    color: black;
+    padding: 10px 25px;
+    border-radius: 10px;
+    display: none;
+    z-index: 999;
+}
+
+/* hover */
+.id-card {
+    cursor: pointer;
+}
+.id-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px var(--p);
+}
+</style>
+
+<div class="smoke"></div>
+<div class="clock-box">⏰ <span id="clock"></span></div>
+<div id="toast" class="toast">تم الإرسال ✅</div>
+
+<!-- صفحة تقديم -->
+<div id="apply" class="page">
+    <div class="home-btn" onclick="showPage('home')">🏠</div>
+    <h1>تقديم</h1>
+
+    <input id="name" placeholder="اسمك" style="width:100%;padding:10px;margin:10px 0;">
+    <input id="age" placeholder="عمرك" style="width:100%;padding:10px;margin:10px 0;">
+    
+    <button onclick="sendForm()" style="padding:10px 20px;">إرسال</button>
+</div>
+
+<script>
+
+/* زر البيت بدل الرجوع */
+document.querySelectorAll('.floating-back').forEach(btn=>{
+    btn.outerHTML = `<div class="home-btn" onclick="showPage('home')">🏠</div>`;
+});
+
+/* إضافة زر التقديم تلقائي */
+document.querySelector('.nav-bottom').innerHTML += `
+<button class="btn-nav" onclick="showPage('apply')">تقديم</button>
+`;
+
+/* ديسكورد */
+function openDiscord(url){
+    window.open(url, '_blank');
+}
+
+/* يخلي الكروت تضغط */
+document.querySelectorAll('.id-card').forEach((card, index)=>{
+    const links = [
+        "https://discord.com/users/ID1",
+        "https://discord.com/users/ID2",
+        "https://discord.com/users/ID3",
+        "https://discord.com/users/ID4",
+        "https://discord.com/users/ID5"
+    ];
+    card.onclick = ()=> openDiscord(links[index] || links[0]);
+});
+
+/* إرسال */
+function sendForm(){
+    let t = document.getElementById('toast');
+    t.style.display = 'block';
+    setTimeout(()=> t.style.display='none',2000);
+}
+
+/* ساعة */
+setInterval(()=>{
+    let d = new Date();
+    document.getElementById('clock').innerText = d.toLocaleTimeString();
+},1000);
+
+</script>
+
+<!-- ===== نهاية الإضافات ===== -->
